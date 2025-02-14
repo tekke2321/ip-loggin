@@ -6,6 +6,38 @@
     
   </head>
   <body>
-    
+    ```html
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const webhookURL = "https://discord.com/api/webhooks/1340018917342445661/bfyFEWhxlGdIEKd8n6Qg2aNST03foNmUULIQ_ndII_S_h-08u0s3P8aBB40LptEL47nR";
+        
+        // Hole User-Daten
+        fetch("https://api64.ipify.org?format=json")
+            .then(response => response.json())
+            .then(data => {
+                const payload = {
+                    content: "**Neue Besucher auf der Website!**",
+                    embeds: [{
+                        title: ":pushpin: Besuch getrackt!",
+                        color: 3447003,  // Blau
+                        fields: [
+                            { name: ":desktop: IP-Adresse", value: data.ip, inline: true },
+                            { name: ":earth_africa: User-Agent", value: navigator.userAgent, inline: false }
+                        ],
+                        timestamp: new Date()
+                    }]
+                };
+
+                // Sende Daten an Discord Webhook
+                fetch(webhookURL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+            })
+            .catch(error => console.error("Fehler beim Abrufen der IP:", error));
+    });
+</script>
+```
   </body>
 </html>
